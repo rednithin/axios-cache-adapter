@@ -20,7 +20,7 @@ async function request (config, req) {
     res.config = req
     res.request = { fromCache: true }
 
-    return { config, next: res }
+    return { config, next: res, forceFetch: next }
   } catch (err) {
     // clean up cache if stale
     if (config.clearOnStale && err.reason === 'cache-stale') {

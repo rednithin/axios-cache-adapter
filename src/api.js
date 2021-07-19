@@ -23,9 +23,22 @@ function setupCache (config = {}) {
     // Execute request against local cache
     let res = await request(reqConfig, req)
     const next = res.next
+    const forceFetch = res.forceFetch
 
     // Response is not function, something was in cache, return it
-    if (!isFunction(next)) return next
+    if (!isFunction(next)) {
+      if(reqConfig.forceFetch && forceFetch) {
+        setTimeout(() => {
+          try {
+            const res = await reqConfig.adapter(req)
+            forceFetch?.(res);
+          } catch (err) {
+            console.log(err)
+          }
+        })
+      }
+      return next
+    } 
 
     // Nothing in cache so we execute the default adapter or any given adapter
     // Will throw if the request has a status different than 2xx
