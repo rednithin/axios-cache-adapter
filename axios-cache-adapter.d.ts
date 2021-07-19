@@ -25,6 +25,7 @@ declare module 'axios'
  */
 export interface IAxiosCacheAdapterOptions
 {
+	forceFetch?: boolean;
 	/**
 	 * {Number} Maximum time for storing each request in milliseconds,
 	 * defaults to 15 minutes when using `setup()`.
