@@ -27,11 +27,11 @@ function setupCache (config = {}) {
 
     // Response is not function, something was in cache, return it
     if (!isFunction(next)) {
-      if(reqConfig.forceFetch && forceFetch) {
-        setTimeout(() => {
+      if (reqConfig.forceFetch && forceFetch) {
+        setTimeout(async () => {
           try {
             const res = await reqConfig.adapter(req)
-            forceFetch?.(res);
+            forceFetch?.(res)
           } catch (err) {
             console.log(err)
           }
